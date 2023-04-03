@@ -4,6 +4,28 @@ const client = (() => {
 
     const showNotificationButton = () => {
         notificationbutton.style.display = "block";
+        notificationbutton.addEventListener("click", showNotification);
+    }
+
+    const showNotification = () => {
+        //console.log("button clicked");
+        const simpleTextNotifications = reg => reg.showNotification("First Notification");
+
+        const customizedNotifications = reg => {
+            const options = {
+                body: 'Spring Semester is done',
+                icon: "imgs/notification.png",
+            }
+            actions: [
+                {action: "search", title: "Search PPU"},
+                {action: "close", title: "Nevermind"},
+            ],
+            reg.showNotification('Second Notification', options)
+        }
+        navigator.serviceWorker.getRegistration()
+        .then(registration => customizedNotifications(registration));
+
+
     }
 
     const checkNotificationSupport = () => {
